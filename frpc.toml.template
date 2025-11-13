@@ -1,0 +1,24 @@
+# 指向你的 frps（公网）
+serverAddr = "${FRPS_SERVER_ADDR}"
+serverPort = 7000
+
+[auth]
+method = "token"
+token  = "${FRP_TOKEN}"
+
+# Stardew Valley server (UDP)
+[[proxies]]
+name       = "stardew"
+type       = "udp"
+localIP    = "127.0.0.1"
+localPort  = 24642     # 容器/主机上的星露谷 UDP 端口
+remotePort = ${FRP_REMOTE_PORT}
+
+# Optional: VNC (TCP) for headless management
+[[proxies]]
+name       = "stardew-vnc"
+type       = "tcp"
+localIP    = "127.0.0.1"
+localPort  = 5900      # VNC 端口
+remotePort = ${FRP_VNC_REMOTE_PORT}
+
