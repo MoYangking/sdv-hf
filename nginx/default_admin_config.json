@@ -1,0 +1,40 @@
+{
+  "admin_password": "admin",
+  "default_backend": "http://127.0.0.1:8000",
+  "rules": [
+    {
+      "match": { "path_equal": "/sync" },
+      "redirect_to": "/sync/",
+      "action": "redirect",
+      "id": "redirect-sync-slash",
+      "priority": 200
+    },
+    {
+      "match": { "path_prefix": "/sync/" },
+      "set_headers": [
+        { "value": "/sync", "name": "X-Forwarded-Prefix" }
+      ],
+      "backend": "http://127.0.0.1:5321",
+      "action": "proxy",
+      "id": "proxy-sync",
+      "priority": 180
+    },
+    {
+      "match": { "path_equal": "/terminal" },
+      "redirect_to": "/terminal/",
+      "action": "redirect",
+      "id": "redirect-terminal-slash",
+      "priority": 200
+    },
+    {
+      "match": { "path_prefix": "/terminal/" },
+      "set_headers": [
+        { "value": "/terminal", "name": "X-Forwarded-Prefix" }
+      ],
+      "backend": "http://127.0.0.1:8080",
+      "action": "proxy",
+      "id": "proxy-terminal",
+      "priority": 180
+    }
+  ]
+}
